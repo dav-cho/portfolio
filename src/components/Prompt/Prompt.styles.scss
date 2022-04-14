@@ -1,0 +1,11 @@
+@use "src/utils/variables" as *;
+
+.prompt {
+  .prompt-left {
+    &::after {
+      content: "\00a0";
+      margin-left: 0.1rem;
+      background-color: $text-primary;
+    }
+  }
+}
