@@ -1,11 +1,24 @@
-@use "src/utils/variables" as *;
+@use 'src/utils/variables' as *;
 
 .prompt {
+  width: 30%;
+  margin: 0 auto;
+  text-align: left;
+
+  .prefix {
+    margin-right: 0.5rem;
+  }
   .prompt-left {
-    &::after {
-      content: "\00a0";
-      margin-left: 0.1rem;
-      background-color: $text-primary;
-    }
+    border: 1px solid green;
+  }
+
+  .cursor {
+    margin: 0 0.1rem;
+    background-color: $text-primary;
+    color: $background-primary;
+  }
+
+  .prompt-right {
+    border: 1px solid green;
   }
 }

@@ -1,0 +1,46 @@
+@use 'src/utils/variables' as *;
+
+.output {
+  border: 1px solid green;
+
+  display: inline-block;
+  margin: 2rem auto 0;
+  text-align: left;
+
+  ul {
+    list-style: none;
+
+    li {
+      margin: 1rem;
+
+      a {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: $text-primary;
+
+        &:hover {
+          text-decoration: underline;
+        }
+
+        svg {
+          // fill: $text-primary;
+          width: 3rem;
+          height: 3rem;
+        }
+
+        .linkedin {
+          fill: #0a66c2;
+        }
+
+        .github {
+          fill: $text-primary;
+        }
+
+        .email {
+          fill: #ea4335;
+        }
+      }
+    }
+  }
+}

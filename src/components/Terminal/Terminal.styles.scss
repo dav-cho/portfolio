@@ -1,4 +1,4 @@
-@use "src/utils/variables" as *;
+@use 'src/utils/variables' as *;
 
 .terminal {
   border: 1px solid red;
@@ -6,23 +6,19 @@
   width: 50%;
   height: 50%;
   margin: 0 auto;
-
-  .output {
-    border: 1px solid green;
-
-    display: inline-block;
-    margin: 2rem auto 0;
-    text-align: left;
-  }
 }
 
 .hidden-input {
   border: 1px solid blue;
+  caret-color: $text-primary;
+  color: $text-primary;
 
   position: absolute;
+  top: 0;
+  left: 0;
   // border: none;
   background-color: $background-primary;
-  color: $text-primary;
+  // color: transparent;
   text-align: center;
   // caret-color: transparent;
 
