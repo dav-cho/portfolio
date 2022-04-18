@@ -1,0 +1,15 @@
+/**
+* 0 - 600px:      Phone
+* 600 - 900px:    Tablet Portrait
+* 900-1200px:     Tablet Landscape
+* (1200 - 1800)   Default (Desktop)
+* 1800 + :        Large Desktop
+**/
+
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    }
+  }
+}

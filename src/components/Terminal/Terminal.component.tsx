@@ -119,7 +119,6 @@ export const Terminal = () => {
 
   const processCommand = () => {
     const commands: Command[] = ['help', 'list', 'open'];
-    // const [command, flag] = input.split(' ') as [Command, Flag];
     const [command, flag] = input.replace(/\s+/g, ' ').trim().split(' ') as [
       Command,
       Flag
@@ -171,7 +170,6 @@ export const Terminal = () => {
         }
 
         moveArrow('left');
-        break;
         break;
       case 'ArrowRight':
         if (event.altKey || event.metaKey) {

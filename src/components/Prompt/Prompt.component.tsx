@@ -27,7 +27,7 @@ export const Prompt = ({ input, pos }: PromptProps) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCursorStyle(prev => (prev === 'inverted' ? '' : 'inverted'));
+      setCursorStyle(prev => prev === '' ? 'inverted' : '');
     }, 500);
 
     return () => clearInterval(interval);

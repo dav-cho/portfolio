@@ -1,3 +1,5 @@
+@use 'src/utils/mixins' as *;
+
 .App {
   font-size: 1.6rem;
   text-align: center;
@@ -8,5 +10,9 @@
 
   .logo {
     margin-bottom: 5%;
+
+    @include respond(phone) {
+      font-size: 1rem;
+    }
   }
 }
