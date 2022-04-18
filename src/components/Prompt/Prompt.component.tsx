@@ -14,12 +14,14 @@ export const Prompt = ({ input, pos }: PromptProps) => {
 
   useEffect(() => {
     setLeft(input.slice(0, pos));
+
     setCursor(() => {
       if ((!input.length && pos === 0) || pos === input.length) {
         return <>&nbsp;</>;
       }
       return <>{input.slice(pos, pos + 1)}</>;
     });
+
     setRight(pos === input.length ? null : <>{input.slice(pos + 1)}&nbsp;</>);
   }, [input, pos]);
 

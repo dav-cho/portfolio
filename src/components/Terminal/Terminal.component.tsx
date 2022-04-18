@@ -118,12 +118,16 @@ export const Terminal = () => {
   };
 
   const processCommand = () => {
+    const commands: Command[] = ['help', 'list', 'open'];
+    // const [command, flag] = input.split(' ') as [Command, Flag];
+    const [command, flag] = input.replace(/\s+/g, ' ').trim().split(' ') as [
+      Command,
+      Flag
+    ];
+
     setOpen(prev => !prev);
     setInput('');
     setPos(0);
-
-    const commands: Command[] = ['help', 'list', 'open'];
-    const [command, flag] = input.split(' ') as [Command, Flag];
 
     if (!commands.includes(command)) {
       setOutput(`Error: Could not find command '${command}'`);
@@ -148,7 +152,6 @@ export const Terminal = () => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
-    // TODO: add q to quit?
     switch (event.key) {
       case 'Enter':
         processCommand();
@@ -168,6 +171,7 @@ export const Terminal = () => {
         }
 
         moveArrow('left');
+        break;
         break;
       case 'ArrowRight':
         if (event.altKey || event.metaKey) {
