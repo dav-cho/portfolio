@@ -46,10 +46,10 @@ OPTIONS
 `;
 
 interface OutputProps {
-  output: string | JSX.Element;
+  output: React.ReactNode;
 }
 
-export const Output: React.FC<OutputProps> = ({ output }) => {
+export const Output = ({ output }: OutputProps) => {
   return (
     <div className="output">
       <pre>{output}</pre>

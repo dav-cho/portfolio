@@ -1,24 +1,12 @@
 @use 'src/utils/variables' as *;
 
 .prompt {
-  width: 30%;
+  width: 40%;
   margin: 0 auto;
-  text-align: left;
+  text-align: center;
 
-  .prefix {
-    margin-right: 0.5rem;
-  }
-  .prompt-left {
-    border: 1px solid green;
-  }
-
-  .cursor {
-    margin: 0 0.1rem;
+  .inverted {
     background-color: $text-primary;
     color: $background-primary;
-  }
-
-  .prompt-right {
-    border: 1px solid green;
   }
 }

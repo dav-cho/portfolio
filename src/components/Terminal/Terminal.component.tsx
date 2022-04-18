@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Prompt } from '../Prompt/Prompt.component';
 import { Output, docHelp, docList, docOpen } from '../Output/Output.component';
+import { Modal } from '../Modal/Modal.component';
 import './Terminal.styles.scss';
 
 type Command = 'help' | 'list' | 'open';
@@ -21,8 +22,9 @@ export const Terminal = () => {
   const inputEl = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState<string>('');
   const [prevInput, setPrevInput] = useState<string>('');
-  const [output, setOutput] = useState<string | JSX.Element>('');
+  const [output, setOutput] = useState<React.ReactNode>('');
   const [pos, setPos] = useState<number>(0);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleBlur = () => {
     if (inputEl.current) {
@@ -39,38 +41,69 @@ export const Terminal = () => {
     setInput(event.target.value);
   };
 
-  useEffect(() => {
+  const moveCursor = () => {
     setPos(prev => {
-      if (prevInput.length === input.length - 1) {
-        console.log('~ prevInput.length + 1 === input.length');
+      if (prevInput.length + 1 === input.length) {
         return ++prev;
-      } else if (prevInput.length === input.length + 1) {
+      } else if (prevInput.length - 1 === input.length) {
         for (let i = 0; i < input.length; i++) {
           if (prevInput[i] !== input[i]) {
             return i;
           }
-
-          return --prev;
         }
       }
 
       return 0;
     });
-  }, [input, prevInput]);
+  };
+
+  const checkCursorBounds = () => {
+    if (pos < 0) {
+      setPos(0);
+    }
+
+    if (pos > input.length) {
+      setPos(input.length);
+    }
+  };
+
+  useEffect(moveCursor, [input, prevInput]);
+  useEffect(checkCursorBounds, [input.length, pos]);
+
+  const moveArrow = (dir: 'left' | 'right') => {
+    if (dir === 'left') {
+      setPos(prev => (prev - 1 < 0 ? 0 : --prev));
+    }
+
+    if (dir === 'right') {
+      setPos(prev => (prev + 1 > input.length ? input.length : ++prev));
+    }
+  };
+
+  const openURL = (url: 'linkedin' | 'github' | 'email') => {
+    const URLs = {
+      linkedin: 'https://www.linkedin.com/in/davcho',
+      github: 'https://github.com/dav-cho',
+      email: 'mailto:dav@davcho.com',
+    };
+
+    window.open(URLs[url], '_blank');
+    setOpen(false);
+  };
 
   const processOpen = (flag?: Flag) => {
     switch (flag) {
       case '-l':
       case '--linkedin':
-        window.open('https://www.linkedin.com/in/davcho', '_blank');
+        openURL('linkedin');
         break;
       case '-g':
       case '--github':
-        window.open('https://github.com/dav-cho', '_blank');
+        openURL('github');
         break;
       case '-e':
       case '--email':
-        window.open('mailto:dav@davcho.com', '_blank');
+        openURL('email');
         break;
       case '-h':
       case '--help':
@@ -85,6 +118,10 @@ export const Terminal = () => {
   };
 
   const processCommand = () => {
+    setOpen(prev => !prev);
+    setInput('');
+    setPos(0);
+
     const commands: Command[] = ['help', 'list', 'open'];
     const [command, flag] = input.split(' ') as [Command, Flag];
 
@@ -111,28 +148,33 @@ export const Terminal = () => {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
+    // TODO: add q to quit?
     switch (event.key) {
       case 'Enter':
         processCommand();
-        setInput('');
-        setPos(0);
         break;
       case 'Escape':
+        setOpen(false);
         setInput('');
         setOutput('');
         setPos(0);
         break;
-      case 'ArrowLeft':
-        setPos(prev => (prev - 1 < 0 ? 0 : --prev));
-        break;
-      case 'ArrowRight':
-        setPos(prev => (prev + 1 > input.length ? input.length : ++prev));
-        break;
-      // case 'Backspace':
-      //   console.log('~ backspace');
-      //   break;
       case 'Delete':
         setPos(prev => ++prev);
+        break;
+      case 'ArrowLeft':
+        if (event.altKey || event.metaKey) {
+          event.preventDefault();
+        }
+
+        moveArrow('left');
+        break;
+      case 'ArrowRight':
+        if (event.altKey || event.metaKey) {
+          event.preventDefault();
+        }
+
+        moveArrow('right');
         break;
     }
   };
@@ -141,8 +183,13 @@ export const Terminal = () => {
     <>
       <div className="terminal">
         <Prompt input={input} pos={pos} />
-        <Output output={output} />
       </div>
+
+      {open && (
+        <Modal setOpen={setOpen}>
+          <Output output={output} />
+        </Modal>
+      )}
 
       <input
         className="hidden-input"
@@ -151,6 +198,7 @@ export const Terminal = () => {
         onBlur={handleBlur}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
+        spellCheck="false"
       />
     </>
   );

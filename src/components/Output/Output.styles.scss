@@ -1,10 +1,8 @@
 @use 'src/utils/variables' as *;
 
 .output {
-  border: 1px solid green;
-
   display: inline-block;
-  margin: 2rem auto 0;
+  padding: 3rem;
   text-align: left;
 
   ul {
@@ -24,7 +22,6 @@
         }
 
         svg {
-          // fill: $text-primary;
           width: 3rem;
           height: 3rem;
         }

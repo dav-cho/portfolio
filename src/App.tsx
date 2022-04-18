@@ -1,4 +1,3 @@
-import React from 'react';
 import { Terminal } from './components/Terminal/Terminal.component';
 import { logo } from './assets/logo';
 import './App.scss';
