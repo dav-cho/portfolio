@@ -12,13 +12,18 @@ export const Prompt = ({ input, pos }: PromptProps) => {
   const [right, setRight] = useState<React.ReactNode>('');
   const [cursorStyle, setCursorStyle] = useState<string>('');
 
+  // TODO: Fix delete with extra whitespace behavior
   useEffect(() => {
     setLeft(input.slice(0, pos));
 
     setCursor(() => {
-      if ((!input.length && pos === 0) || pos === input.length) {
+      const checkPosZeroAndEmptyString = !input.length && pos === 0;
+      const checkPosEnd = pos === input.length;
+
+      if (checkPosZeroAndEmptyString || checkPosEnd) {
         return <>&nbsp;</>;
       }
+
       return <>{input.slice(pos, pos + 1)}</>;
     });
 
