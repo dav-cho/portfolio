@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import './Prompt.styles.scss';
 
+// TODO: Fix delete with extra whitespace behavior
+// TODO: Set cursor to solid when moving or typing
+
 interface PromptProps {
   input: string;
   pos: number;
@@ -12,7 +15,6 @@ export const Prompt = ({ input, pos }: PromptProps) => {
   const [right, setRight] = useState<React.ReactNode>('');
   const [cursorStyle, setCursorStyle] = useState<string>('');
 
-  // TODO: Fix delete with extra whitespace behavior
   useEffect(() => {
     setLeft(input.slice(0, pos));
 
@@ -32,7 +34,7 @@ export const Prompt = ({ input, pos }: PromptProps) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCursorStyle(prev => prev === '' ? 'inverted' : '');
+      setCursorStyle(prev => (prev === '' ? 'inverted' : ''));
     }, 500);
 
     return () => clearInterval(interval);
