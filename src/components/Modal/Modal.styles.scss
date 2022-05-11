@@ -1,23 +1,41 @@
 @use 'src/utils/variables' as *;
+@use 'src/utils/animations' as *;
 
 .modal-container {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
   z-index: 100;
   height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba($background-primary, 0.7);
+  border: 1px solid $text-primary;
+  background-color: rgba($background-primary, 0.8);
+
+  transform: scaleY(0.01) scaleX(0);
+  animation: unfoldIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 
   .modal {
     margin-bottom: 20%;
     border: 1px solid $text-primary;
-    background-color: $background-primary;
+    outline: $text-primary solid 1px;
+    outline-offset: 3px;
     text-align: center;
     font-size: 1.6rem;
+    background-color: $background-primary;
+
+    transform: scale(0);
+    animation: zoomIn 0.25s 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  }
+}
+
+.out {
+  transform: scale(1);
+  animation: unfoldOut 0.3s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+
+  .modal {
+    animation: zoomOut 0.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
   }
 }

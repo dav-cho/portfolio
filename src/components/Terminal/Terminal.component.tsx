@@ -25,6 +25,18 @@ export const Terminal = () => {
   const [output, setOutput] = useState<React.ReactNode>('');
   const [pos, setPos] = useState<number>(0);
   const [open, setOpen] = useState<boolean>(false);
+  const [modalClasses, setModalClasses] = useState<string>('modal-container');
+
+  const handleOpen = () => {
+    setModalClasses('modal-container');
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalClasses('modal-container out');
+
+    setTimeout(() => setOpen(false), 1000);
+  };
 
   const handleBlur = () => {
     if (inputEl.current) {
@@ -88,7 +100,7 @@ export const Terminal = () => {
     };
 
     window.open(URLs[url], '_blank');
-    setOpen(false);
+    handleClose();
   };
 
   const processOpen = (flag?: Flag) => {
@@ -124,7 +136,7 @@ export const Terminal = () => {
       Flag
     ];
 
-    setOpen(prev => !prev);
+    handleOpen();
     setInput('');
     setPos(0);
 
@@ -156,7 +168,7 @@ export const Terminal = () => {
         processCommand();
         break;
       case 'Escape':
-        setOpen(false);
+        handleClose();
         setInput('');
         setOutput('');
         setPos(0);
@@ -188,7 +200,11 @@ export const Terminal = () => {
       </div>
 
       {open && (
-        <Modal setOpen={setOpen}>
+        <Modal
+          modalClasses={modalClasses}
+          setOpen={setOpen}
+          handleClose={handleClose}
+        >
           <Output output={output} />
         </Modal>
       )}
