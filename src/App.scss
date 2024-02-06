@@ -4,12 +4,12 @@
   font-size: 1.6rem;
   text-align: center;
   position: relative;
-  top: 30%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -30%);
 
   .logo {
-    margin-bottom: 5%;
+    margin-bottom: 3%;
 
     @include respond(phone) {
       font-size: 1rem;

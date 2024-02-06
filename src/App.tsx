@@ -1,4 +1,4 @@
-import { Terminal } from './components/Terminal/Terminal.component';
+import { Links } from './components/Links/Links.component';
 import { logo } from './assets/logo';
 import './App.scss';
 
@@ -10,7 +10,7 @@ function App() {
           <pre key={`logo-${idx}`}>{line}</pre>
         ))}
       </div>
-      <Terminal />
+      <Links />
     </div>
   );
 }

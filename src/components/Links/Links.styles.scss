@@ -1,0 +1,24 @@
+@use 'src/utils/variables' as *;
+
+.links {
+  display: inline-block;
+
+  .link {
+    display: inline-block;
+
+    a {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      margin: 0 1rem;
+      text-decoration: none;
+      color: $text-primary;
+
+      svg {
+        fill: $text-primary;
+        width: 4rem;
+        height: 4rem;
+      }
+    }
+  }
+}
