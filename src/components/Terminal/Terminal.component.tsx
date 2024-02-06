@@ -18,6 +18,8 @@ type Flag =
   | '-h'
   | '--help';
 
+const COMMANDS: Command[] = ['help', 'list', 'open'];
+
 export const Terminal = () => {
   const inputEl = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState<string>('');
@@ -129,18 +131,25 @@ export const Terminal = () => {
     }
   };
 
+  const sanitizeInput = (command: string) => {
+    const parts = input.replace(/\s+/g, ' ').trim().split(' ');
+    if (parts.length > 2) {
+      setOutput(`Error: Too many arguments`);
+      return;
+    }
+  };
+
   const processCommand = () => {
-    const commands: Command[] = ['help', 'list', 'open'];
     const [command, flag] = input.replace(/\s+/g, ' ').trim().split(' ') as [
       Command,
-      Flag
+      Flag,
     ];
 
     handleOpen();
     setInput('');
     setPos(0);
 
-    if (!commands.includes(command)) {
+    if (!COMMANDS.includes(command)) {
       setOutput(`Error: Could not find command '${command}'`);
       return;
     }
